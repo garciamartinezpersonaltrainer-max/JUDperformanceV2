@@ -60,7 +60,16 @@ const TabResumen = ({ client }) => {
   const [saved, setSaved] = useState(false);
 
   const save = async () => {
-    await supabase.from("profiles").update(form).eq("id", client.id);
+    const updateData = {
+      goal: form.goal,
+      level: form.level,
+      weight: form.weight ? parseFloat(form.weight) : null,
+      height: form.height ? parseFloat(form.height) : null,
+      injuries: form.injuries,
+      notes: form.notes,
+    };
+    const { error } = await supabase.from("profiles").update(updateData).eq("id", client.id);
+    if (error) { alert("Error: " + error.message); return; }
     setSaved(true);
     setEditing(false);
     setTimeout(() => setSaved(false), 2000);
