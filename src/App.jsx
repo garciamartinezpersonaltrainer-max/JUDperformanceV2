@@ -547,8 +547,10 @@ export default function App({ user, onSignOut }) {
         case "cliente": return <div style={{paddingBottom:20}}><Header title={data?.name||"Cliente"} onHome={()=>nav("home")}/><div style={{padding:16}}><div style={{color:C.muted}}>Detalle de cliente</div></div></div>;
         case "agenda":  return <TrainerAgenda nav={nav}/>;
         case "rutinas": return <TrainerRutinas nav={nav}/>;
-        case "stats":   return <TrainerStats nav={nav}/>;
-        default:        return <TrainerHome user={user} nav={nav} logout={logout}/>;
+        case "stats":     return <TrainerStats nav={nav}/>;
+        case "mensajes":  return <ChatList user={user} nav={nav} onHome={()=>nav("home")}/>;
+        case "chat-conv": return <Conversacion user={user} otherUser={data} onBack={()=>nav("mensajes")} onHome={()=>nav("home")}/>;
+        default:          return <TrainerHome user={user} nav={nav} logout={logout}/>;
       }
     } else {
       switch(screen){
