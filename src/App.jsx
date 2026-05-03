@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ClientesScreen from "./Clientes.jsx";
+import ClienteDetalle from "./ClienteDetalle.jsx";
 
 const I = ({ n, s=20, c="currentColor" }) => {
   const icons = {
@@ -541,6 +542,7 @@ export default function App({ user, onSignOut }) {
       switch(screen){
         case "home":    return <TrainerHome user={user} nav={nav} logout={logout}/>;
         case "clientes":return <ClientesScreen user={user} nav={nav}/>;
+        case "cliente-detalle":return <ClienteDetalle clientId={data?.id} user={user} nav={nav}/>;
         case "cliente": return <div style={{paddingBottom:20}}><Header title={data?.name||"Cliente"} onHome={()=>nav("home")}/><div style={{padding:16}}><div style={{color:C.muted}}>Detalle de cliente</div></div></div>;
         case "agenda":  return <TrainerAgenda nav={nav}/>;
         case "rutinas": return <TrainerRutinas nav={nav}/>;

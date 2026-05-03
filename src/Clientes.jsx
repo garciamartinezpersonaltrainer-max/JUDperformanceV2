@@ -133,7 +133,7 @@ export default function ClientesScreen({ user, nav }) {
             </div>
           </div>
         ) : filtered.map(c => (
-          <div key={c.id} style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:16,padding:"14px",marginBottom:10}}>
+          <div key={c.id} onClick={()=>tab==="activos"&&nav("cliente-detalle",c)} style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:16,padding:"14px",marginBottom:10,cursor:tab==="activos"?"pointer":"default"}}>
             <div style={{display:"flex",alignItems:"center",gap:12}}>
               <div style={{width:46,height:46,borderRadius:"50%",background:getColor(c.id),display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:800,fontSize:15,flexShrink:0}}>
                 {getInitials(c.name||c.email)}
