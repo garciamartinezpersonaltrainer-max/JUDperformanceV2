@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ClientesScreen from "./Clientes.jsx";
 import ClienteDetalle from "./ClienteDetalle.jsx";
+import { ChatList, ChatAtleta, Conversacion } from "./Chat.jsx";
 
 const I = ({ n, s=20, c="currentColor" }) => {
   const icons = {
@@ -558,7 +559,7 @@ export default function App({ user, onSignOut }) {
         case "nutricion":  return <AtletaNutricion nav={nav}/>;
         case "logros":     return <AtletaLogros nav={nav}/>;
         case "historial":  return <div style={{paddingBottom:20}}><Header title="Historial" sub="Mis entrenamientos" onHome={()=>nav("home")}/><div style={{padding:16,color:C.muted}}>Pronto: historial de sesiones</div></div>;
-        case "chat":       return <AtletaChat nav={nav}/>;
+        case "chat":       return <ChatAtleta user={user} nav={nav}/>;
         default:           return <AtletaHome user={user} nav={nav} logout={logout}/>;
       }
     }
