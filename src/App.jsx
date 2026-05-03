@@ -510,17 +510,14 @@ const AtletaChat = ({ nav }) => {
 };
 
 // MAIN APP
-export default function App() {
-  const [user,setUser]=useState(null);
+export default function App({ user, onSignOut }) {
   const [screen,setScreen]=useState("home");
   const [data,setData]=useState(null);
 
   const nav=(sc,d=null)=>{setScreen(sc);setData(d);};
-  const logout=()=>{setUser(null);setScreen("home");};
+  const logout=onSignOut;
 
-  if(!user) return <Login onLogin={u=>{setUser(u);setScreen("home");}}/>;
-
-  const isTrainer=user.role==="trainer";
+  const isTrainer=user?.role==="trainer";
 
   const TRAINER_TABS=[
     {id:"home",icon:"home",label:"Inicio"},
