@@ -31,6 +31,9 @@ export function Conversacion({ user, otherUser, onBack, onHome }) {
   useEffect(() => {
     loadMessages();
 
+    // Polling cada 3 segundos para nuevos mensajes
+    const interval = setInterval(loadMessages, 3000);
+
     // Suscripción en tiempo real
     const channel = supabase
       .channel("messages-" + [user.id, otherUser.id].sort().join("-"))
@@ -38,15 +41,15 @@ export function Conversacion({ user, otherUser, onBack, onHome }) {
         event: "INSERT",
         schema: "public",
         table: "messages",
-        filter: `receiver_id=eq.${user.id}`,
-      }, (payload) => {
-        if (payload.new.sender_id === otherUser.id) {
-          setMsgs(prev => [...prev, payload.new]);
-        }
+      }, () => {
+        loadMessages();
       })
       .subscribe();
 
-    return () => supabase.removeChannel(channel);
+    return () => {
+      clearInterval(interval);
+      supabase.removeChannel(channel);
+    };
   }, [otherUser.id]);
 
   useEffect(() => {
