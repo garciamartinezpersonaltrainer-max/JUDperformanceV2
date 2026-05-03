@@ -526,7 +526,7 @@ export default function App({ user, onSignOut }) {
     {id:"home",icon:"home",label:"Inicio"},
     {id:"clientes",icon:"users",label:"Clientes"},
     {id:"agenda",icon:"calendar",label:"Agenda"},
-    {id:"rutinas",icon:"edit",label:"Rutinas"},
+    {id:"mensajes",icon:"chat",label:"Chats"},
     {id:"stats",icon:"chart",label:"Stats"},
   ];
   const CLIENT_TABS=[
