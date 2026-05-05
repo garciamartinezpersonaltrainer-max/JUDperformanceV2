@@ -138,6 +138,48 @@ const SelectorEjercicio = ({ onSelect, onClose, grupoFiltro }) => {
   );
 };
 
+
+// ─── VIDEO PLAYER EMBEBIDO ────────────────────────────────────────────────────
+const VideoPlayer = ({ url, nombre }) => {
+  const [show, setShow] = useState(false);
+  
+  // Extraer ID de YouTube
+  const getYoutubeId = (url) => {
+    const match = url.match(/(?:v=|youtu\.be\/)([^&
+?#]+)/);
+    return match ? match[1] : null;
+  };
+  
+  const videoId = getYoutubeId(url);
+  if (!videoId) return null;
+
+  return (
+    <div style={{marginTop:10}}>
+      {!show ? (
+        <button onClick={()=>setShow(true)} style={{width:"100%",background:"#FF0000",border:"none",borderRadius:12,padding:"10px 14px",color:"#fff",fontWeight:700,fontSize:13,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:8}}>
+          <span style={{fontSize:18}}>▶</span> Ver ejecución del movimiento
+        </button>
+      ) : (
+        <div style={{borderRadius:12,overflow:"hidden",position:"relative",marginTop:6}}>
+          <button onClick={()=>setShow(false)} style={{position:"absolute",top:8,right:8,background:"rgba(0,0,0,0.7)",border:"none",borderRadius:8,padding:"4px 8px",color:"#fff",fontSize:12,cursor:"pointer",zIndex:10}}>
+            ✕ Cerrar
+          </button>
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+            title={nombre}
+            width="100%"
+            height="200"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{display:"block"}}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
 // ─── TARJETA DE EJERCICIO EN RUTINA ──────────────────────────────────────────
 const EjercicioCard = ({ exData, index, onRemove, onUpdate, onSwap }) => {
   const [expanded, setExpanded] = useState(false);
@@ -214,6 +256,11 @@ const EjercicioCard = ({ exData, index, onRemove, onUpdate, onSwap }) => {
             <div style={{color:C.blue,fontSize:10,fontWeight:700,marginBottom:4}}>📋 Nota técnica</div>
             <div style={{color:C.muted,fontSize:11,lineHeight:1.5}}>{exData.ejercicio.notas}</div>
           </div>
+
+          {/* VIDEO EMBEBIDO */}
+          {exData.ejercicio.video && (
+            <VideoPlayer url={exData.ejercicio.video} nombre={exData.ejercicio.nombre}/>
+          )}
 
           {/* Músculos */}
           <div style={{marginTop:10}}>
