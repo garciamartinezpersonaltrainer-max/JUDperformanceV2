@@ -141,41 +141,28 @@ const SelectorEjercicio = ({ onSelect, onClose, grupoFiltro }) => {
 
 // ─── VIDEO PLAYER EMBEBIDO ────────────────────────────────────────────────────
 const VideoPlayer = ({ url, nombre }) => {
-  const [show, setShow] = useState(false);
-  
-  // Extraer ID de YouTube
-  const getYoutubeId = (url) => {
-    const match = url.match(/(?:v=|youtu\.be\/)([^&
-?#]+)/);
-    return match ? match[1] : null;
+  const getYoutubeId = (u) => {
+    if (!u) return null;
+    const m = u.match(/[?&]v=([^&]+)/) || u.match(/youtu\.be\/([^?&]+)/);
+    return m ? m[1] : null;
   };
-  
   const videoId = getYoutubeId(url);
   if (!videoId) return null;
-
+  const thumb = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
   return (
-    <div style={{marginTop:10}}>
-      {!show ? (
-        <button onClick={()=>setShow(true)} style={{width:"100%",background:"#FF0000",border:"none",borderRadius:12,padding:"10px 14px",color:"#fff",fontWeight:700,fontSize:13,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:8}}>
-          <span style={{fontSize:18}}>▶</span> Ver ejecución del movimiento
-        </button>
-      ) : (
-        <div style={{borderRadius:12,overflow:"hidden",position:"relative",marginTop:6}}>
-          <button onClick={()=>setShow(false)} style={{position:"absolute",top:8,right:8,background:"rgba(0,0,0,0.7)",border:"none",borderRadius:8,padding:"4px 8px",color:"#fff",fontSize:12,cursor:"pointer",zIndex:10}}>
-            ✕ Cerrar
-          </button>
-          <iframe
-            src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
-            title={nombre}
-            width="100%"
-            height="200"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            style={{display:"block"}}
-          />
+    <div style={{marginTop:10,cursor:"pointer"}} onClick={()=>window.open(url,"_blank")}>
+      <div style={{position:"relative",borderRadius:12,overflow:"hidden"}}>
+        <img src={thumb} alt={nombre} style={{width:"100%",height:150,objectFit:"cover",display:"block"}}
+          onError={e=>e.target.style.display="none"}/>
+        <div style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.35)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+          <div style={{width:50,height:50,borderRadius:"50%",background:"#FF0000",display:"flex",alignItems:"center",justifyContent:"center"}}>
+            <span style={{color:"#fff",fontSize:20,marginLeft:4}}>▶</span>
+          </div>
         </div>
-      )}
+        <div style={{position:"absolute",bottom:0,left:0,right:0,background:"linear-gradient(transparent,rgba(0,0,0,0.7))",padding:"20px 10px 8px"}}>
+          <div style={{color:"#fff",fontSize:11,fontWeight:600}}>{nombre} — Ver en YouTube</div>
+        </div>
+      </div>
     </div>
   );
 };
