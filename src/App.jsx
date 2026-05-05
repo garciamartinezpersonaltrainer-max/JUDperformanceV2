@@ -526,7 +526,7 @@ export default function App({ user, onSignOut }) {
   const TRAINER_TABS=[
     {id:"home",icon:"home",label:"Inicio"},
     {id:"clientes",icon:"users",label:"Clientes"},
-    {id:"agenda",icon:"calendar",label:"Agenda"},
+    {id:"rutinas",icon:"dumbbell",label:"Rutinas"},
     {id:"mensajes",icon:"chat",label:"Chats"},
     {id:"stats",icon:"chart",label:"Stats"},
   ];
